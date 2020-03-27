@@ -112,3 +112,15 @@ PUT /api/notes/{id}
 
 #### Result Code on Success: `200 OK`
 #### Result JSON: No
+
+----
+
+### Delete Note
+#### Request
+```
+DELETE /api/notes/{id}
+```
+
+#### Request Parameters JSON: No
+#### Result Code on Success: `200 OK`
+#### Result JSON: No
