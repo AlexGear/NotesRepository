@@ -15,10 +15,17 @@ namespace NotesRepository.Models
             this.db = db;
         }
 
-        public async Task AddAsync(Note note)
+        public async Task<Note> AddAsync(NoteWithoutId noteWithoutId)
         {
+            var note = new Note
+            {
+                Title = noteWithoutId.Title,
+                Content = noteWithoutId.Content
+            };
             await db.Notes.AddAsync(note);
             await db.SaveChangesAsync();
+            
+            return note;
         }
 
         public Task<List<Note>> GetAllAsync()
