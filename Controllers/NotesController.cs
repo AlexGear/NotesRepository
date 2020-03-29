@@ -22,31 +22,61 @@ namespace NotesRepository.Controllers
         [HttpGet]
         public async Task<IEnumerable<NoteWithoutContent>> GetAllNotesWithoutContent()
         {
-            throw new NotImplementedException();
+            return await noteRepository.GetAllNotesWithoutContentAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNoteById(int id)
         {
-            throw new NotImplementedException();
+            Note note = await noteRepository.GetByIdAsync(id);
+            if (note == null)
+            {
+                return NotFound();
+            }
+            return Ok(note);
         }
         
         [HttpPost]
-        public async Task<IActionResult> AddNote([FromBody] NoteWithoutId note)
+        public async Task<IActionResult> AddNote([FromBody] NoteWithoutId noteWithoutId)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Note newNote = await noteRepository.AddAsync(noteWithoutId);
+            var idOnly = new { id = newNote.Id };
+            return CreatedAtAction(nameof(GetNoteById), idOnly, idOnly);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateNote(int id, [FromBody] NoteWithoutId note)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await noteRepository.UpdateAsync(new Note
+                {
+                    Id = id,
+                    Title = note.Title,
+                    Content = note.Content
+                });
+                return Ok();
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveNote(int id)
+        public Task RemoveNote(int id)
         {
-            throw new NotImplementedException();
+            return noteRepository.RemoveByIdAsync(id);
         }
     }
 }
