@@ -26,10 +26,10 @@ namespace NotesRepository.Models
             return db.Notes.AsNoTracking().ToListAsync();
         }
 
-        public Task<List<TitleOnlyNote>> GetAllTitleOnlyNotesAsync()
+        public Task<List<NoteWithoutContent>> GetAllNotesWithoutContentAsync()
         {
             return db.Notes
-                .Select(note => new TitleOnlyNote
+                .Select(note => new NoteWithoutContent
                 {
                     Id = note.Id,
                     Title = note.Title

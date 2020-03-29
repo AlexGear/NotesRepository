@@ -9,7 +9,7 @@ namespace NotesRepository.Models
     {
         Task<Note> GetByIdAsync(int id);
         Task<List<Note>> GetAllAsync();
-        Task<List<TitleOnlyNote>> GetAllTitleOnlyNotesAsync();
+        Task<List<NoteWithoutContent>> GetAllNotesWithoutContentAsync();
         Task AddAsync(Note note);
         Task UpdateAsync(Note note);
         Task RemoveByIdAsync(int id);

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NotesRepository.Models
 {
-    class TitleOnlyNote
+    class NoteWithoutContent
     {
         public int Id { get; set; }
         public string Title { get; set; }
