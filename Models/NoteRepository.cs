@@ -50,7 +50,11 @@ namespace NotesRepository.Models
 
         public async Task RemoveByIdAsync(int id)
         {
-            db.Notes.Remove(await db.Notes.FindAsync(id));
+            Note note = await db.Notes.FindAsync(id);
+            if (note == null)
+                return;
+
+            db.Notes.Remove(note);
             await db.SaveChangesAsync();
         }
 
