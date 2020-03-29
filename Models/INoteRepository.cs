@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NotesRepository.Models
 {
-    interface INoteRepository
+    public interface INoteRepository
     {
         Task<Note> GetByIdAsync(int id);
         Task<List<Note>> GetAllAsync();
