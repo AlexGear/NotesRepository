@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
 
 namespace NotesRepository.Models
 {
@@ -48,29 +49,23 @@ namespace NotesRepository.Models
             return db.Notes.AsNoTracking().Where(note => note.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task RemoveByIdAsync(int id)
+        public Task RemoveByIdAsync(int id)
         {
-            Note note = await db.Notes.FindAsync(id);
-            if (note == null)
-                return;
-
-            db.Notes.Remove(note);
-            await db.SaveChangesAsync();
+            return db.Notes.Where(note => note.Id == id).DeleteAsync();
         }
 
         public async Task UpdateAsync(Note newNote)
         {
-            Note existingNote = await db.Notes.FindAsync(newNote.Id);
-            
-            if (existingNote == null)
+            int num = await db.Notes.Where(note => note.Id == newNote.Id)
+                .UpdateAsync(x => new Note
+                {
+                    Title = newNote.Title,
+                    Content = newNote.Content
+                });
+            if (num == 0)
             {
                 throw new EntityNotFoundException($"Note with Id = {newNote.Id} not found");
             }
-
-            existingNote.Title = newNote.Title;
-            existingNote.Content = newNote.Content;
-            
-            await db.SaveChangesAsync();
         }
     }
 }
