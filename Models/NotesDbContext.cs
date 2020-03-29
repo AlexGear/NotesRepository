@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NotesRepository.Models
 {
-    public class NotesDbContext : DbContext
+    class NotesDbContext : DbContext
     {
         public DbSet<Note> Notes { get; set; }
 

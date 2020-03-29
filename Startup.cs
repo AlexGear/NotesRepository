@@ -15,7 +15,7 @@ using NotesRepository.Models;
 
 namespace NotesRepository
 {
-    public class Startup
+    class Startup
     {
         public Startup(IConfiguration configuration)
         {

@@ -11,7 +11,7 @@ using NotesRepository.Models;
 
 namespace NotesRepository
 {
-    public class Program
+    class Program
     {
         public static void Main(string[] args)
         {
