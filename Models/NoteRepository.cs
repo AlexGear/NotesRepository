@@ -54,10 +54,19 @@ namespace NotesRepository.Models
             await db.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Note note)
+        public async Task UpdateAsync(Note newNote)
         {
-            db.Notes.Update(note);
-            return db.SaveChangesAsync();
+            Note existingNote = await db.Notes.FindAsync(newNote.Id);
+            
+            if (existingNote == null)
+            {
+                throw new EntityNotFoundException($"Note with Id = {newNote.Id} not found");
+            }
+
+            existingNote.Title = newNote.Title;
+            existingNote.Content = newNote.Content;
+            
+            await db.SaveChangesAsync();
         }
     }
 }
